@@ -79,6 +79,9 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         body.light-theme .options-container {
@@ -158,6 +161,12 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
+
+        .game-controls {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body class="dark-theme">
@@ -169,7 +178,7 @@
         <div class="score" id="score">Score: 0</div>
     </div>
 
-    <div class="options-container">
+    <div class="options-container" id="options-container">
         <label for="color-select">Couleur de la cible:</label>
         <select id="color-select">
             <option value="red">Rouge</option>
@@ -201,10 +210,11 @@
 
         <label for="sound-checkbox">Activer le son:</label>
         <input type="checkbox" id="sound-checkbox">
+    </div>
 
+    <div class="game-controls">
         <button class="start-stop-btn" id="start-stop-btn">Démarrer</button>
         <button class="start-stop-btn" id="reset-btn">Réinitialiser le score</button>
-
         <button class="theme-toggle" id="theme-toggle">Passer au thème clair</button>
     </div>
 
@@ -222,6 +232,7 @@
         const resetBtn = document.getElementById('reset-btn');
         const startStopBtn = document.getElementById('start-stop-btn');
         const themeToggle = document.getElementById('theme-toggle');
+        const optionsContainer = document.getElementById('options-container');
 
         let targetColor = 'red';
         let targetSize = 50;
@@ -282,9 +293,13 @@
             gameActive = !gameActive;
             if (gameActive) {
                 startStopBtn.textContent = 'Arrêter';
+                optionsContainer.style.opacity = 0;
+                optionsContainer.style.visibility = 'hidden';
                 positionnerCible();
             } else {
                 startStopBtn.textContent = 'Démarrer';
+                optionsContainer.style.opacity = 1;
+                optionsContainer.style.visibility = 'visible';
             }
         });
 
